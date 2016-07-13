@@ -9,16 +9,10 @@
         <!-- CSS -->
         <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css"/>
         <link rel="stylesheet" href="style.css"/>
-        <!-- Holder JS -->
-        <script src="../bower_components/holderjs/holder.js"></script>
-        <!-- Google Maps API -->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxYjrFDrM8UWJ15Q4oW7j_bH4TjFUSJPI"></script>
-        <!-- Modernizr -->
-        <script src="../bower_components/modernizr/bin/modernizr"></script>
-        <!-- JS Source -->
-        <script src="../bower_components/jquery/jquery.js"></script>
-        <script src="../bower_components/angular/angular.js"></script>
-        <script src="../bower_components/angular-route/angular-route.js"></script>
+        <!-- JS -->
+        <script src="../bower_components/holderjs/holder.min.js"></script>
+        <script src="../bower_components/angular/angular.min.js"></script>
+        <script src="../bower_components/angular-route/angular-route.min.js"></script>
         <script src="../bower_components/angularjs-geolocation/dist/angularjs-geolocation.min.js"></script>
     </head>
     <body>
@@ -38,14 +32,14 @@
             <div class="row content">
                 <!-- Google Map -->
                 <div class="col-md-7">
-                    <div id="map"><img src="holder.js/645x645"></div>
+                    <div id="map"><img data-src="holder.js/645x645"></div>
                 </div>
                 <!-- Side Panel -->
                 <div class="col-md-5">
                     <div class="panel panel-default">
                         <!-- Panel Title -->
                         <div class="panel-heading">
-                            <h2 class="panel-title text-center">Join the Scotch Team!
+                            <h2 class="panel-title text-center">Save the environment
                                 <span class="glyphicon glyphicon-map-marker"></span>
                             </h2>
                         </div>
@@ -55,45 +49,36 @@
                             <form name="addForm" novalidate>
                                 <!-- Text Boxes and Other User Inputs. Note ng-model binds the values to Angular $scope -->
                                 <div class="form-group">
-                                    <label for="username">Username
-                                        <span class="badge">All fields required</span>
-                                    </label>
-                                    <input type="text" class="form-control" id="username" placeholder="OldandGold" ng-model="formData.username" required>
+                                    <label for="userName">Enter Full Name</label>
+                                    <input type="text" class="form-control" name="userName" id="userName" ng-model="formData.userName" placeholder="Jane Doe" required />
                                 </div>
                                 <label class="radio control-label">Gender</label>
                                 <div class="radio">
-                                    <label>
-                                        <input type="radio" name="optionsRadios" id="radiomale" value="Male" ng-model="formData.gender">
-                                        Male
-                                    </label>
-                                </div>
-                                <div class="radio" required>
-                                    <label>
-                                        <input type="radio" name="optionsRadios" id="radiofemale" value="Female" ng-model="formData.gender">
-                                        Female
+                                    <label for="gender_m">
+                                        <input type="radio" name="gender" id="gender_m" value="Male" ng-model="formData.gender" checked />Male
                                     </label>
                                 </div>
                                 <div class="radio">
-                                    <label>
-                                        <input type="radio" name="optionsRadios" id="radioother" value="What's it to ya?" ng-model="formData.gender">
-                                        What's it to ya?
+                                    <label for="gender_f">
+                                        <input type="radio" name="gender" id="gender_f" value="Female" ng-model="formData.gender" required />Female
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label for="gender_o">
+                                        <input type="radio" name="gender" id="gender_o" value="Educate yourself you cis shitlord" ng-model="formData.gender" />EDUCATE YOURSELF, YOU CIS SHITLORD
                                     </label>
                                 </div>
                                 <div class="form-group">
                                     <label for="age">Age</label>
-                                    <input type="number" class="form-control" id="age" placeholder="72" ng-model="formData.age" required>
+                                    <input type="number" class="form-control" name="age" id="age" min="18" step="1" ng-model="formData.age" placeholder="Must be at least 18 y/o" required/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="language">Favorite Language</label>
-                                    <input type="text" class="form-control" id="language" placeholder="Fortran" ng-model="formData.favlang" required>
+                                    <label for="favMusic">Favorite Music Genre</label>
+                                    <input type="text" class="form-control" name="favMusic" id="favMusic" ng-model="formData.favMusic" placeholder="Rock, Pop, Trap, etc." required />
                                 </div>
                                 <div class="form-group">
-                                    <label for="latitude">Latitude</label>
-                                    <input type="text" class="form-control" id="latitude" value="39.500" ng-model="formData.latitude" readonly>
-                                </div>
-                                <div class="form-group">
-                                    <label for="longitude">Longitude</label>
-                                    <input type="text" class="form-control" id="longitude" value="-98.350" ng-model="formData.longitude" readonly>
+                                    <label for="startTime">What time do you leave for work?</label>
+                                    <input type="time" class="form-control" name="startTime" id="startTime" ng-model="formData.startTime" required />
                                 </div>
                                 <div class="form-group">
                                     <label for="verified">HTML5 Verified Location?
@@ -115,14 +100,16 @@
             <hr/>
             <!-- Footer -->
             <div class="footer">
-                <p class="text-center">
-                    <span class="glyphicon glyphicon-check"></span>
-                    Created by Ahmed Haque for Scotch IO -
-                    <a href="https://scotch.io/">App Tutorial</a>
-                    |
-                    <a href="https://github.com/afhaque/MeanMapAppV2.0">Github Repo</a>
-                </p>
             </div>
         </div>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxYjrFDrM8UWJ15Q4oW7j_bH4TjFUSJPI"></script>
+        <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="http://cdn.jsdelivr.net/webshim/1.12.4/extras/modernizr-custom.js"></script>
+        <script src="http://cdn.jsdelivr.net/webshim/1.12.4/polyfiller.js"></script>
+        <script>
+            webshims.setOptions('waitReady', false);
+            webshims.setOptions('forms-ext', {types: 'time'});
+            webshims.polyfill('forms forms-ext');
+        </script>
     </body>
 </html>
