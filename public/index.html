@@ -15,7 +15,7 @@
         <script src="../bower_components/angular-route/angular-route.min.js"></script>
         <script src="../bower_components/angularjs-geolocation/dist/angularjs-geolocation.min.js"></script>
     </head>
-    <body>
+    <body ng-controller="addCtrl">
         <div class="container">
             <div class="header">
                 <ul class="nav nav-pills pull-right">
@@ -31,11 +31,11 @@
             <!-- Map and Side Panel -->
             <div class="row content">
                 <!-- Google Map -->
-                <div class="col-md-7">
-                    <div id="map"><img data-src="holder.js/645x645"></div>
+                <div class="col-md-7 col-xs-12">
+                    <div id="map"><img data-src="holder.js/645x810"></div>
                 </div>
                 <!-- Side Panel -->
-                <div class="col-md-5">
+                <div class="col-md-5 col-xs-12">
                     <div class="panel panel-default">
                         <!-- Panel Title -->
                         <div class="panel-heading">
@@ -77,8 +77,22 @@
                                     <input type="text" class="form-control" name="favMusic" id="favMusic" ng-model="formData.favMusic" placeholder="Rock, Pop, Trap, etc." required />
                                 </div>
                                 <div class="form-group">
-                                    <label for="startTime">What time do you leave for work?</label>
+                                    <label for="startTime">What time do you leave from home?</label>
                                     <input type="time" class="form-control" name="startTime" id="startTime" ng-model="formData.startTime" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="endTime">What time do you leave from work?</label>
+                                    <input type="time" class="form-control" name="endTime" id="endTime" ng-model="formData.endTime" required />
+                                </div>
+                                <label class="control-label">Where is your home?</label>
+                                <div class="form-group form-inline">
+                                    <label class="sr-only" for="homeLatitude">Latitude</label><input type="text" class="form-control" name="homeLatitude" id="homeLatitude" ng-model="formData.homeLatitude" placeholder="Latitude" required />
+                                    <label class="sr-only" for="homeLongitude">Longitude</label><input type="text" class="form-control" name="homeLongitude" id="homeLongitude" ng-model="formData.homeLongitude" placeholder="Longitude" required />
+                                </div>
+                                <label class="control-label">Where is your work?</label>
+                                <div class="form-group form-inline">
+                                    <label class="sr-only" for="workLatitude">Latitude</label><input type="text" class="form-control" name="workLatitude" id="workLatitude" ng-model="formData.workLatitude" placeholder="Latitude" required />
+                                    <label class="sr-only" for="workLongitude">Longitude</label><input type="text" class="form-control" name="workLongitude" id="workLongitude" ng-model="formData.workLongitude" placeholder="Longitude" required />
                                 </div>
                                 <div class="form-group">
                                     <label for="verified">HTML5 Verified Location?
@@ -91,7 +105,7 @@
                                     <input type="text" class="form-control" id="verified" placeholder="Nope (Thanks for spamming my map...)" ng-model="formData.htmlverified" readonly>
                                 </div>
                                 <!-- Submit button. Note that its tied to createUser() function from addCtrl. Also note ng-disabled logic which prevents early submits.  -->
-                                <button type="submit" class="btn btn-danger btn-block" ng-disabled="addForm.$invalid">Submit</button>
+                                <button type="submit" class="btn btn-danger btn-block" ng-click="createUser()" ng-disabled="addForm.$invalid">Submit</button>
                             </form>
                         </div>
                     </div>
@@ -102,6 +116,8 @@
             <div class="footer">
             </div>
         </div>
+        <script src="js/app.js"></script>
+        <script src="js/addCtrl.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxYjrFDrM8UWJ15Q4oW7j_bH4TjFUSJPI"></script>
         <script src="../bower_components/jquery/dist/jquery.min.js"></script>
         <script src="http://cdn.jsdelivr.net/webshim/1.12.4/extras/modernizr-custom.js"></script>
