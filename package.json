@@ -1,0 +1,12 @@
+{
+  "name"        : "PoolWithMe",
+  "main"        : "server.js",
+  "dependencies": {
+    "express"     : "4.14.0",
+    "mongoose"    : "4.5.4",
+    "morgan"      : "1.7.0",
+    "body-parser" : "1.15.2",
+    "jsonwebtoken": "7.1.3",
+    "method-override": "2.3.6"
+  }
+}
