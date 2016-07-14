@@ -12,22 +12,24 @@ angular.module('gservice', [])
         //Array of Work Locations obtained from API calls
         var locationsWork = [];
 
-        // Selected Location (initialize to center of America)
+        // Selected Location (initialize near Chicago area)
         var selectedLat = 41.9116;
         var selectedLong = -87.8927;
+
+        var selectedPos = new google.maps.LatLng(selectedLat, selectedLong);
 
         // Functions
         // --------------------------------------------------------------
         // Refresh the Map with new data. Function will take new latitude and longitude coordinates.
-        googleMapService.refresh = function(latitude, longitude){
+        googleMapService.refresh = function(myPosition){
 
             // Clears the holding array of locations
             locationsHome = [];
             locationsWork = [];
 
             // Set the selected lat and long equal to the ones provided on the refresh() call
-            selectedLat = latitude;
-            selectedLong = longitude;
+
+            selectedPos = myPosition;
 
             // Perform an AJAX call to get all of the records in the db.
             $http.get('/users').success(function(response){
@@ -37,7 +39,7 @@ angular.module('gservice', [])
                 locationsWork = convertToMapPoints(response, "Work");
 
                 // Then initialize the map.
-                initialize(latitude, longitude);
+                initialize(myPosition);
 
             }).error(function(){});
         };
@@ -62,19 +64,17 @@ angular.module('gservice', [])
                 userHours.startTime = (start.getHours() < 10 ? '0'+start.getHours() : start.getHours())  + ':' + (start.getMinutes() < 10 ? '0'+start.getMinutes() : start.getMinutes());
                 userHours.endTime = (end.getHours() < 10 ? '0'+end.getHours() : end.getHours())  + ':' + (end.getMinutes() < 10 ? '0'+end.getMinutes() : end.getMinutes());
 
-                var  contentString =
-                    '<p><b>Username</b>: ' + user.userName +
-                    '<br><b>Hours: ' + userHours.startTime + ' - ' + userHours.endTime +
-                    '</p>';
-
                 // Converts each of the JSON records into Google Maps Location format (Note [Lat, Lng] format).
                 if (site === "Home") {
 
                   locations.push({
-                    latlon: new google.maps.LatLng(user.home[1], user.home[0]),
+                    position: user.homeGPSPos,
                     message: new google.maps.InfoWindow({
-                        content: contentString,
-                        maxWidth: 240
+                        content: '<p><b>Username</b>: ' + user.userName +
+                                 '<br><b>Work</b>: ' + user.work +
+                                 '<br><b>Hours: ' + userHours.startTime + ' - ' + userHours.endTime +
+                                 '</p>',
+                        maxWidth: 320
                     }),
                     username: user.username,
                     gender: user.gender,
@@ -84,10 +84,13 @@ angular.module('gservice', [])
                 }
                 else {
                   locations.push({
-                    latlon: new google.maps.LatLng(user.work[1], user.work[0]),
+                    position: user.workGPSPos,
                     message: new google.maps.InfoWindow({
-                        content: contentString,
-                        maxWidth: 240
+                        content: '<p><b>Username</b>: ' + user.userName +
+                                 '<br><b>Home</b>: ' + user.home +
+                                 '<br><b>Hours: ' + userHours.startTime + ' - ' + userHours.endTime +
+                                 '</p>',
+                        maxWidth: 320
                     }),
                     username: user.username,
                     gender: user.gender,
@@ -100,37 +103,29 @@ angular.module('gservice', [])
         return locations;
     };
     // Initializes the map
-    var initialize = function(latitude, longitude) {
+    var initialize = function(myPosition) {
         var map;
-        // Uses the selected lat, long as starting point
-        var myLatLng = {
-            lat: selectedLat,
-            lng: selectedLong
-        };
         // If map has not been created already...
         if (!map) {
-
             // Create a new map and place in the index.html page
             map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 10,
-                center: new google.maps.LatLng(myLatLng.lat, myLatLng.lng)
+                center: selectedPos
             });
         }
-
         // Loop through each location in the array and place a marker
         placeMarkers(locationsHome, "Home", map);
         placeMarkers(locationsWork, "Work", map);
 
-        // Set initial location as a bouncing red marker
-        var initialLocation = new google.maps.LatLng(latitude, longitude);
+        //Set initial location as a bouncing red marker
+        var initialLocation = myPosition;
         var marker = new google.maps.Marker({
             position: initialLocation,
             //animation: google.maps.Animation.BOUNCE,
             map: map,
-            icon: 'http://maps.google.com/mapfiles/ms/micons/red-dot.png'
+            icon: 'http://maps.google.com/mapfiles/arrow.png'
         });
         lastMarker = marker;
-
     };
 
     var placeMarkers = function(locations, site, map) {
@@ -138,7 +133,7 @@ angular.module('gservice', [])
         var marker = {};
         if (site == "Home") {
           marker = new google.maps.Marker({
-            position: n.latlon,
+            position: n.position,
             map: map,
             title: 'Home',
             icon: 'http://maps.google.com/mapfiles/kml/pal3/icon48.png'
@@ -146,7 +141,7 @@ angular.module('gservice', [])
         }
         else {
           marker = new google.maps.Marker({
-            position: n.latlon,
+            position: n.position,
             map: map,
             title: 'Work',
             icon: 'http://maps.google.com/mapfiles/kml/pal3/icon21.png'
@@ -165,7 +160,7 @@ angular.module('gservice', [])
 
     // Refresh the page upon window load. Use the initial latitude and longitude
     google.maps.event.addDomListener(window, 'load',
-        googleMapService.refresh(selectedLat, selectedLong));
+        googleMapService.refresh(selectedPos));
 
     return googleMapService;
 });

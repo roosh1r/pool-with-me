@@ -3,7 +3,7 @@
 <html class="no-js" ng-app="carPoolApp">
     <head>
         <meta charset="utf-8">
-        <title>Pool With Me</title>
+        <title>Car Pooling App</title>
         <meta name="description" content="An example demonstrating Google Map integration with MEAN Apps">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- CSS -->
@@ -26,7 +26,7 @@
                         <a href="">Find Teammates</a>
                     </li>
                 </ul>
-                <h3 class="text-muted">Car Pooling App</h3>
+                <h3 class="text-muted">Work In Progress</h3>
             </div>
             <!-- Map and Side Panel -->
             <div class="row content">
@@ -73,8 +73,10 @@
                                     <input type="number" class="form-control" name="age" id="age" min="18" step="1" ng-model="formData.age" placeholder="Must be at least 18 y/o" required/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="favMusic">Favorite Music Genre</label>
-                                    <input type="text" class="form-control" name="favMusic" id="favMusic" ng-model="formData.favMusic" placeholder="Rock, Pop, Trap, etc." required />
+                                    <label for="homeLocation">Home</label><input type="text" class="form-control" name="homeLocation" id="homeLocation" ng-model="formData.homeAddr" ng-focus="geoLocate()" placeholder="Address" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="workLocation">Work</label><input type="text" class="form-control" name="workLocation" id="workLocation" ng-model="formData.workAddr" placeholder="Address" required />
                                 </div>
                                 <div class="form-group">
                                     <label for="startTime">What time do you leave from home?</label>
@@ -84,15 +86,9 @@
                                     <label for="endTime">What time do you leave from work?</label>
                                     <input type="time" class="form-control" name="endTime" id="endTime" ng-model="formData.endTime" required />
                                 </div>
-                                <label class="control-label">Where is your home?</label>
-                                <div class="form-group form-inline">
-                                    <label class="sr-only" for="homeLatitude">Latitude</label><input type="text" class="form-control" name="homeLatitude" id="homeLatitude" ng-model="formData.homeLatitude" placeholder="Latitude" required />
-                                    <label class="sr-only" for="homeLongitude">Longitude</label><input type="text" class="form-control" name="homeLongitude" id="homeLongitude" ng-model="formData.homeLongitude" placeholder="Longitude" required />
-                                </div>
-                                <label class="control-label">Where is your work?</label>
-                                <div class="form-group form-inline">
-                                    <label class="sr-only" for="workLatitude">Latitude</label><input type="text" class="form-control" name="workLatitude" id="workLatitude" ng-model="formData.workLatitude" placeholder="Latitude" required />
-                                    <label class="sr-only" for="workLongitude">Longitude</label><input type="text" class="form-control" name="workLongitude" id="workLongitude" ng-model="formData.workLongitude" placeholder="Longitude" required />
+                                <div class="form-group">
+                                    <label for="favMusic">Favorite Radio Station</label>
+                                    <input type="text" class="form-control" name="favMusic" id="favMusic" ng-model="formData.favMusic" placeholder="91.9 WBEZ, 99.9 FM, etc." required />
                                 </div>
                                 <div class="form-group">
                                     <label for="verified">HTML5 Verified Location?
@@ -119,7 +115,8 @@
         <script src="js/app.js"></script>
         <script src="js/addCtrl.js"></script>
         <script src="js/gservice.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxYjrFDrM8UWJ15Q4oW7j_bH4TjFUSJPI"></script>
+        <script src="js/geocoder.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxYjrFDrM8UWJ15Q4oW7j_bH4TjFUSJPI&libraries=places"></script>
         <script src="../bower_components/jquery/dist/jquery.min.js"></script>
         <script src="http://cdn.jsdelivr.net/webshim/1.12.4/extras/modernizr-custom.js"></script>
         <script src="http://cdn.jsdelivr.net/webshim/1.12.4/polyfiller.js"></script>

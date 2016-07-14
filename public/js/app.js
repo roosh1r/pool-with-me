@@ -1,1 +1,1 @@
-var app = angular.module('carPoolApp', ['addCtrl', 'geolocation', 'gservice']);
+var app = angular.module('carPoolApp', ['addCtrl', 'geolocation', 'gservice', 'geocoder']);
