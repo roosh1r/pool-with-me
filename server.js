@@ -8,7 +8,7 @@ var router = require('./app/routes');
 
 var app = express();
 
-mongoose.connect("mongodb://localhost:27017/carPoolApp");
+mongoose.connect("mongodb://admin:password@ds027751.mlab.com:27751/carpoolusers");
 
 app.use(express.static(__dirname + '/public'));
 app.use('/bower_components', express.static(__dirname + '/bower_components'));
