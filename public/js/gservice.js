@@ -1,6 +1,6 @@
 // Creates the gservice factory. This will be the primary means by which we interact with Google Maps
 angular.module('gservice', [])
-    .factory('gservice', function($http){
+    .factory('gservice', function($rootScope, $http){
 
         // Initialize Variables
         // -------------------------------------------------------------
@@ -126,6 +126,26 @@ angular.module('gservice', [])
             icon: 'https://maps.google.com/mapfiles/arrow.png'
         });
         lastMarker = marker;
+
+        map.panTo(myPosition);
+
+        google.maps.event.addListener(map, 'click', function(e) {
+            var marker = new google.maps.Marker({
+                position: e.latLng,
+                animation: google.maps.Animation.BOUNCE,
+                map: map,
+                icon: 'https://maps.google.com/mapfiles/arrow.png'
+            });
+
+            if(lastMarker) {
+                lastMarker.setMap(null);
+            }
+            lastMarker = marker;
+            map.panTo(marker.position);
+
+            googleMapService.clickedPos = marker.getPosition();
+            $rootScope.$broadcast("clicked");
+        });
     };
 
     var placeMarkers = function(locations, site, map) {

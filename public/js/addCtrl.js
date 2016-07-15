@@ -1,9 +1,18 @@
 var addCtrl = angular.module('addCtrl', ['geolocation', 'gservice', 'geocoder']);
-addCtrl.controller('addCtrl', function($scope, $http, geolocation, gservice, geocoder) {
+addCtrl.controller('addCtrl', function($scope, $http, $rootScope, geolocation, gservice, geocoder) {
   $scope.formData = {};
   var coords = {};
 
   geocoder.initAutoComplete();
+
+  $rootScope.$on("clicked", function() {
+    geocoder.reverseGeocode(gservice.clickedPos.lat(), gservice.clickedPos.lng(), function(homeAddr) {
+      $scope.$apply(function(){
+        $scope.formData.homeAddr = homeAddr;
+        $scope.formData.htmlverified = "Nope (Thanks for spamming my map...)";
+      });
+    });
+  });
 
   $scope.createUser = function() {
     var userData = {
