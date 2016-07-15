@@ -123,7 +123,7 @@ angular.module('gservice', [])
             position: initialLocation,
             //animation: google.maps.Animation.BOUNCE,
             map: map,
-            icon: 'http://maps.google.com/mapfiles/arrow.png'
+            icon: 'https://maps.google.com/mapfiles/arrow.png'
         });
         lastMarker = marker;
     };
@@ -136,7 +136,7 @@ angular.module('gservice', [])
             position: n.position,
             map: map,
             title: 'Home',
-            icon: 'http://maps.google.com/mapfiles/kml/pal3/icon48.png'
+            icon: 'https://maps.google.com/mapfiles/kml/pal3/icon48.png'
           });
         }
         else {
@@ -144,7 +144,7 @@ angular.module('gservice', [])
             position: n.position,
             map: map,
             title: 'Work',
-            icon: 'http://maps.google.com/mapfiles/kml/pal3/icon21.png'
+            icon: 'https://maps.google.com/mapfiles/kml/pal3/icon21.png'
           });
         }
 

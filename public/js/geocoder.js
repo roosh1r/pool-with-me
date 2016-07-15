@@ -3,21 +3,21 @@ angular.module('geocoder', [])
 
     var addrCoder = {};
 
-    var autcompleteHome, autocompleteWork;
+    var searchBoxHome, searchBoxWork;
 
-    addrCoder.initAutoComplete = function(){
-      autocompleteHome = new google.maps.places.Autocomplete(
+    addrCoder.initSearchBox = function(){
+      searchBoxHome = new google.maps.places.SearchBox(
         (document.getElementById('homeLocation')), {types: ['geocode']}
       );
-      autocompleteHome.addListener('place_changed', function() {
-        var place = autocompleteHome.getPlace();
+      searchBoxHome.addListener('place_changed', function() {
+        var place = searchBoxHome.getPlace();
         document.getElementById('homeLocation').value = place.formatted_address;
       });
-      autocompleteWork = new google.maps.places.Autocomplete(
+      searchBoxWork = new google.maps.places.SearchBox(
         (document.getElementById('workLocation')), {types: ['geocode']}
       );
-      autocompleteWork.addListener('place_changed', function() {
-        var place = autocompleteWork.getPlace();
+      searchBoxWork.addListener('place_changed', function() {
+        var place = searchBoxWork.getPlace();
         document.getElementById('workLocation').value = place.formatted_address;
       });
     };
@@ -25,10 +25,10 @@ angular.module('geocoder', [])
     addrCoder.getGPSCoords = function(site) {
       var myplace;
        if ( site === "home" ){
-        myplace = autocompleteHome.getPlace();
+        myplace = searchBoxHome.getPlace();
        }
        else {
-        myplace = autocompleteWork.getPlace();
+        myplace = searchBoxWork.getPlace();
        }
        return myplace.geometry.location;
     };
@@ -44,7 +44,7 @@ angular.module('geocoder', [])
             center: geolocation,
             radius: position.coords.accuracy
           });
-          autocompleteHome.setBounds(circle.getBounds());
+          searchBoxHome.setBounds(circle.getBounds());
         });
       }
     };

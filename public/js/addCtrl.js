@@ -2,11 +2,8 @@ var addCtrl = angular.module('addCtrl', ['geolocation', 'gservice', 'geocoder'])
 addCtrl.controller('addCtrl', function($scope, $http, geolocation, gservice, geocoder) {
   $scope.formData = {};
   var coords = {};
-//  $scope.formData.homeAddr = 'naperville, IL';
-//  $scope.formData.workAddr = 'chicago, IL';
 
-  //geocoder.initAutoComplete($scope.formData.workAddr);
-  geocoder.initAutoComplete();
+  geocoder.initSearchBox();
   $scope.geoLocate = function() {
     geocoder.geolocate();
   };
