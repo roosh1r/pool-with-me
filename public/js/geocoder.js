@@ -3,32 +3,33 @@ angular.module('geocoder', [])
 
     var addrCoder = {};
 
-    var searchBoxHome, searchBoxWork;
+    var autocompleteHome, autocompleteWork;
 
-    addrCoder.initSearchBox = function(){
-      searchBoxHome = new google.maps.places.SearchBox(
-        (document.getElementById('homeLocation')), {types: ['geocode']}
-      );
-      searchBoxHome.addListener('place_changed', function() {
-        var place = searchBoxHome.getPlace();
-        document.getElementById('homeLocation').value = place.formatted_address;
+    addrCoder.initAutoComplete = function(){
+      var homeInput = document.getElementById('homeLocation');
+      var workInput = document.getElementById('workLocation');
+
+      autocompleteHome = new google.maps.places.Autocomplete(homeInput);
+      autocompleteHome.addListener('place_changed', function() {
+        var place = autocompleteHome.getPlace();
+        console.log(place);
+        homeInput.value = place.formatted_address;
       });
-      searchBoxWork = new google.maps.places.SearchBox(
-        (document.getElementById('workLocation')), {types: ['geocode']}
-      );
-      searchBoxWork.addListener('place_changed', function() {
-        var place = searchBoxWork.getPlace();
-        document.getElementById('workLocation').value = place.formatted_address;
+      autocompleteWork = new google.maps.places.Autocomplete(workInput);
+      autocompleteWork.addListener('place_changed', function() {
+        var place = autocompleteWork.getPlace();
+        console.log(place);
+        workInput.value = place.formatted_address;
       });
     };
 
     addrCoder.getGPSCoords = function(site) {
       var myplace;
        if ( site === "home" ){
-        myplace = searchBoxHome.getPlace();
+        myplace = autocompleteHome.getPlace();
        }
        else {
-        myplace = searchBoxWork.getPlace();
+        myplace = autocompleteWork.getPlace();
        }
        return myplace.geometry.location;
     };
@@ -44,7 +45,7 @@ angular.module('geocoder', [])
             center: geolocation,
             radius: position.coords.accuracy
           });
-          searchBoxHome.setBounds(circle.getBounds());
+          autocompleteHome.setBounds(circle.getBounds());
         });
       }
     };

@@ -3,8 +3,8 @@ addCtrl.controller('addCtrl', function($scope, $http, geolocation, gservice, geo
   $scope.formData = {};
   var coords = {};
 
-  geocoder.initSearchBox();
-  
+  geocoder.initAutoComplete();
+
   $scope.createUser = function() {
     var userData = {
         userName: $scope.formData.userName,
