@@ -4,10 +4,7 @@ addCtrl.controller('addCtrl', function($scope, $http, geolocation, gservice, geo
   var coords = {};
 
   geocoder.initSearchBox();
-  $scope.geoLocate = function() {
-    geocoder.geolocate();
-  };
-
+  
   $scope.createUser = function() {
     var userData = {
         userName: $scope.formData.userName,
