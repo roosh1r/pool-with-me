@@ -1,13 +1,15 @@
 <!doctype html>
 <!-- Declares meanMapApp as the starting Angular module -->
-<html class="no-js" ng-app="carPoolApp">
+<html class="no-js" ng-app="ConceptDrop">
     <head>
         <meta charset="utf-8">
-        <title>Car Pooling App</title>
+        <title>ConceptDrop Challenge</title>
         <meta name="description" content="An example demonstrating Google Map integration with MEAN Apps">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- CSS -->
-        <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css"/>
+        <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" />
         <link rel="stylesheet" href="style.css"/>
         <!-- JS -->
         <script src="../bower_components/holderjs/holder.min.js"></script>
@@ -16,100 +18,21 @@
         <script src="../bower_components/angularjs-geolocation/dist/angularjs-geolocation.min.js"></script>
     </head>
     <body ng-controller="addCtrl">
-        <div class="container">
-            <div class="header">
-                <ul class="nav nav-pills pull-right">
-                    <li active>
-                        <a href="">Join the Cause</a>
-                    </li>
-                    <li disabled>
-                        <a href="">Find Others</a>
-                    </li>
-                </ul>
-                <h3 class="text-muted">Work In Progress</h3>
-            </div>
-            <!-- Map and Side Panel -->
-            <div class="row content">
-                <!-- Side Panel -->
-                <div class="col-md-5 col-xs-12">
-                    <div class="panel panel-default">
-                        <!-- Panel Title -->
-                        <div class="panel-heading">
-                            <h2 class="panel-title text-center">Save the environment
-                                <span class="glyphicon glyphicon-map-marker"></span>
-                            </h2>
-                        </div>
-                        <!-- Panel Body -->
-                        <div class="panel-body">
-                            <!-- Creates Form (novalidate disables HTML validation, Angular will control) -->
-                            <form name="addForm" novalidate>
-                                <!-- Text Boxes and Other User Inputs. Note ng-model binds the values to Angular $scope -->
-                                <div class="form-group">
-                                    <label for="userName">Enter Full Name</label>
-                                    <input type="text" class="form-control" name="userName" id="userName" ng-model="formData.userName" placeholder="Jane Doe" required />
-                                </div>
-                                <label class="radio control-label">Gender</label>
-                                <div class="radio">
-                                    <label for="gender_m">
-                                        <input type="radio" name="gender" id="gender_m" value="Male" ng-model="formData.gender" checked />Male
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label for="gender_f">
-                                        <input type="radio" name="gender" id="gender_f" value="Female" ng-model="formData.gender" required />Female
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label for="gender_o">
-                                        <input type="radio" name="gender" id="gender_o" value="Educate yourself you cis shitlord" ng-model="formData.gender" />EDUCATE YOURSELF, YOU CIS SHITLORD
-                                    </label>
-                                </div>
-                                <div class="form-group">
-                                    <label for="age">Age</label>
-                                    <input type="number" class="form-control" name="age" id="age" min="18" step="1" ng-model="formData.age" placeholder="Must be at least 18 y/o" required/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="homeLocation">Home</label><input type="text" class="form-control" name="homeLocation" id="homeLocation" ng-model="formData.homeAddr" placeholder="Address" required />
-                                </div>
-                                <div class="form-group">
-                                    <label for="workLocation">Work</label><input type="text" class="form-control" name="workLocation" id="workLocation" ng-model="formData.workAddr" placeholder="Address" required />
-                                </div>
-                                <div class="form-group">
-                                    <label for="startTime">What time do you leave from home?</label>
-                                    <input type="time" class="form-control" name="startTime" id="startTime" ng-model="formData.startTime" required />
-                                </div>
-                                <div class="form-group">
-                                    <label for="endTime">What time do you leave from work?</label>
-                                    <input type="time" class="form-control" name="endTime" id="endTime" ng-model="formData.endTime" required />
-                                </div>
-                                <div class="form-group">
-                                    <label for="favMusic">Favorite Radio Station</label>
-                                    <input type="text" class="form-control" name="favMusic" id="favMusic" ng-model="formData.favMusic" placeholder="91.9 WBEZ, 99.9 FM, etc." required />
-                                </div>
-                                <div class="form-group">
-                                    <label for="verified">HTML5 Verified Location?
-                                        <span>
-                                            <button class="btn btn-default btn-xs">
-                                                <span class="glyphicon glyphicon-refresh"></span>
-                                            </button>
-                                        </span>
-                                    </label>
-                                    <input type="text" class="form-control" id="verified" placeholder="Nope (Thanks for spamming my map...)" ng-model="formData.htmlverified" readonly>
-                                </div>
-                                <!-- Submit button. Note that its tied to createUser() function from addCtrl. Also note ng-disabled logic which prevents early submits.  -->
-                                <button type="submit" class="btn btn-danger btn-block" ng-click="createUser()" ng-disabled="addForm.$invalid">Submit</button>
-                            </form>
-                        </div>
-                    </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 col-md-8 col-md-offset-2">
+                    <ul id="hexGrid">
+                        <li class="hex" ng-repeat="form in formList">
+                            <div class="hexIn">
+                                <img src="https://farm9.staticflickr.com/8461/8048823381_0fbc2d8efb.jpg" />
+                                <h1>{{form.Type}}</h1>
+                                <p>
+                                    {{form.Description}}
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <!-- Google Map -->
-                <div class="col-md-7 col-xs-12">
-                    <div id="map" style="width: 100%; height: 810px"></div>
-                </div>
-            </div>
-            <hr/>
-            <!-- Footer -->
-            <div class="footer">
             </div>
         </div>
     </body>
@@ -120,10 +43,4 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxYjrFDrM8UWJ15Q4oW7j_bH4TjFUSJPI&libraries=places"></script>
     <script src="../bower_components/jquery/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/webshim/1.12.4/extras/modernizr-custom.js"></script>
-    <script src="https://cdn.jsdelivr.net/webshim/1.12.4/polyfiller.js"></script>
-    <script>
-        webshims.setOptions('waitReady', false);
-        webshims.setOptions('forms-ext', {types: 'time'});
-        webshims.polyfill('forms forms-ext');
-    </script>
 </html>
